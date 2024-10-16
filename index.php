@@ -7,6 +7,7 @@ use App\Utilitaire\Vue;
 use App\Vue\Vue_AfficherMessage;
 use App\Vue\Vue_Connexion_Formulaire_client;
 use App\Vue\Vue_Menu_Administration;
+use App\Vue\Vue_Menu_Commercial;
 use App\Vue\Vue_Structure_Entete;
 
 
@@ -49,7 +50,8 @@ switch ($typeConnexion) {
     case "visiteur" :
         include "Controleur/Controleur_visiteur.php";
         break;
-    case "utilisateurCafe":
+    case "commercial":
+    case "redacteur":
     case "administrateurLogiciel":
         switch ($case) {
             case "Gerer_CommandeClient":
@@ -69,7 +71,7 @@ switch ($typeConnexion) {
                 include "Controleur/Controleur_Gerer_monCompte.php";
                 break;
             default:
-                $Vue->setMenu(new Vue_Menu_Administration());
+                $Vue->setMenu(new Vue_Menu_Administration($_SESSION["typeConnexionBack"]));
                 break;
         }
         break;
@@ -97,5 +99,6 @@ switch ($typeConnexion) {
                 include "Controleur/Controleur_Catalogue_client.php";
                 break;
         }
+
 }
 $Vue->afficher();
